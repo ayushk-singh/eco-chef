@@ -1,67 +1,128 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react"; 
+import ProtectedRoute from "@/app/components/ProtectedRoute"; // Import the HOC
+
 import {
-  Icon2fa,
-  IconBellRinging,
-  IconDatabaseImport,
-  IconFingerprint,
-  IconKey,
   IconLogout,
   IconReceipt2,
-  IconSettings,
-  IconSwitchHorizontal,
-} from '@tabler/icons-react';
-import { Code, Group } from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
-import classes from '@/app/components/DashboardComponent/DashboardComponent.module.css';
+  IconShoppingCart,
+  IconSoup,
+  IconUserCircle,
+} from "@tabler/icons-react";
+import { AppShell, Group, Button, Burger } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { MantineLogo } from "@mantinex/mantine-logo";
+import { useRouter } from "next/navigation";
+import { account } from "@/lib/appwrite";
+import classes from "@/app/components/DashboardComponent/DashboardComponent.module.css";
 
-const data = [
-  { link: '', label: 'Scan Bill', icon: IconBellRinging },
-  { link: '', label: 'Billing', icon: IconReceipt2 },
-  { link: '', label: 'Security', icon: IconFingerprint },
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: '', label: 'Databases', icon: IconDatabaseImport },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
+// Import the components to be rendered
+import UploadBill from "@/app/components/InsideDashboardItems/UploadBill";
+import GroceryList from "@/app/components/InsideDashboardItems/GroceryList";
+import Recipe from "@/app/components/InsideDashboardItems/Receipe";
+import Profile from "@/app/components/InsideDashboardItems/Profile";
+
+const navItems = [
+  { key: "UploadBill", label: "Scan Bill", icon: IconReceipt2 },
+  {
+    key: "groceryList",
+    label: "Show Available Grocery",
+    icon: IconShoppingCart,
+  },
+  { key: "recipe", label: "Recipe", icon: IconSoup },
+  { key: "profile", label: "My Profile", icon: IconUserCircle },
 ];
 
 export function DashboardComponent() {
-  const [active, setActive] = useState('Billing');
+  const [opened, { toggle }] = useDisclosure(); // Controls sidebar toggle
+  const router = useRouter();
+  const [active, setActive] = useState("UploadBill"); // Default to Scan Bill
 
-  const links = data.map((item) => (
-    <a
-      className={classes.link}
-      data-active={item.label === active || undefined}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-      }}
-    >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </a>
-  ));
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession("current");
+      alert("Logged out successfully!");
+      router.push("/auth?mode=login");
+    } catch (err: any) {
+      console.error("Logout failed:", err.message);
+    }
+  };
+
+  // Function to render the selected component dynamically
+  const renderContent = () => {
+    switch (active) {
+      case "UploadBill":
+        return <UploadBill />;
+      case "groceryList":
+        return <GroceryList />;
+      case "recipe":
+        return <Recipe />;
+      case "profile":
+        return <Profile />;
+      default:
+        return <UploadBill />;
+    }
+  };
 
   return (
-    <nav className={classes.navbar}>
-      <div className={classes.navbarMain}>
-        <Group className={classes.header} justify="space-between">
-          <MantineLogo size={28} />
-          <Code fw={700}>v3.1.2</Code>
-        </Group>
-        {links}
-      </div>
+    <ProtectedRoute>
+      <AppShell
+        header={{ height: { base: 60, md: 70, lg: 80 } }}
+        navbar={{
+          width: { base: 220, md: 280, lg: 320 },
+          breakpoint: "sm",
+          collapsed: { mobile: !opened },
+        }}
+        padding="md"
+      >
+        {/* HEADER */}
+        <AppShell.Header>
+          <Group h="100%" px="md" justify="space-between">
+            <Group>
+              <Burger
+                opened={opened}
+                onClick={toggle}
+                hiddenFrom="sm"
+                size="sm"
+              />
+              <MantineLogo size={28} />
+            </Group>
+          </Group>
+        </AppShell.Header>
 
-      <div className={classes.footer}>
+        {/* SIDEBAR / NAVBAR */}
+        <AppShell.Navbar p="md">
+          <div>
+            {navItems.map((item) => (
+              <Button
+                key={item.key}
+                variant={active === item.key ? "filled" : "light"}
+                leftSection={<item.icon size={20} />}
+                fullWidth
+                onClick={() => setActive(item.key)}
+                mb="sm"
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
 
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
-      </div>
-    </nav>
+          {/* LOGOUT BUTTON */}
+          <Button
+            leftSection={<IconLogout size={20} />}
+            color="red"
+            fullWidth
+            mt="auto"
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </AppShell.Navbar>
+
+        {/* MAIN CONTENT - Dynamically Loaded Component */}
+        <AppShell.Main>{renderContent()}</AppShell.Main>
+      </AppShell>
+      </ProtectedRoute>
   );
 }

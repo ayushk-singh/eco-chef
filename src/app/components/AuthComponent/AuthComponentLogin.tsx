@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   Anchor,
   Button,
@@ -11,9 +12,23 @@ import {
   Title,
 } from "@mantine/core";
 import classes from "./AuthComponentLogin.module.css";
+import { account } from "@/lib/appwrite";
 
 export function AuthComponentLogin() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      await account.createEmailPasswordSession(email, password);
+      alert("Login Successful!");
+      router.push("/dashboard"); // Redirect to dashboard after login
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -25,18 +40,28 @@ export function AuthComponentLogin() {
           Login
         </Text>
 
+        {error && (
+          <Text color="red" size="sm" ta="center" mb="sm">
+            {error}
+          </Text>
+        )}
+
         <TextInput
           label="Email address"
           placeholder="hello@gmail.com"
           size="md"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <PasswordInput
           label="Password"
           placeholder="Your password"
           mt="md"
           size="md"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <Button fullWidth mt="xl" size="md">
+        <Button fullWidth mt="xl" size="md" onClick={handleLogin}>
           Login
         </Button>
 
