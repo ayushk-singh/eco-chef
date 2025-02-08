@@ -1,10 +1,11 @@
 import React from 'react'
-import { FileUploadDemo } from '../FileUploader/FileUploader'
+// import { FileUploadDemo } from '../FileUploader/FileUploader'
+import {GroceryListEntry} from '../GroceryListEntry/GroceryListEntry'
 
 function UploadBill() {
   return (
     <>
-    <FileUploadDemo/>
+    <GroceryListEntry/>
     </>
   )
 }
