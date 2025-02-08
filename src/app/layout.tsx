@@ -5,7 +5,7 @@ import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 
 export const metadata = {
-  title: 'My Mantine app',
+  title: 'EcoChef',
   description: 'I have followed setup instructions carefully',
 };
 
