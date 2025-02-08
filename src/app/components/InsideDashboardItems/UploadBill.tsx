@@ -1,6 +1,6 @@
 import React from 'react'
 // import { FileUploadDemo } from '../FileUploader/FileUploader'
-import {GroceryListEntry} from '../GroceryListEntry/GroceryListEntry'
+import {GroceryListEntry} from '@/app/components/GroceryListEntry/GroceryListEntry'
 
 function UploadBill() {
   return (

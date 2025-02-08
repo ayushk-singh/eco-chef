@@ -22,15 +22,17 @@ import UploadBill from "@/app/components/InsideDashboardItems/UploadBill";
 import GroceryList from "@/app/components/InsideDashboardItems/GroceryList";
 import Recipe from "@/app/components/InsideDashboardItems/Receipe";
 import Profile from "@/app/components/InsideDashboardItems/Profile";
+import VerifyRecipe from "../InsideDashboardItems/VerifyRecipe";
 
 const navItems = [
-  { key: "UploadBill", label: "Scan Bill", icon: IconReceipt2 },
+  { key: "UploadBill", label: "Add Items", icon: IconReceipt2 },
   {
     key: "groceryList",
     label: "Show Available Grocery",
     icon: IconShoppingCart,
   },
   { key: "recipe", label: "Recipe", icon: IconSoup },
+  { key: "verifyRecipe", label: "Verify Recipe", icon: IconSoup },
   { key: "profile", label: "My Profile", icon: IconUserCircle },
 ];
 
@@ -58,6 +60,8 @@ export function DashboardComponent() {
         return <GroceryList />;
       case "recipe":
         return <Recipe />;
+      case "verifyRecipe":
+        return <VerifyRecipe />;
       case "profile":
         return <Profile />;
       default:
@@ -102,6 +106,7 @@ export function DashboardComponent() {
                 fullWidth
                 onClick={() => setActive(item.key)}
                 mb="sm"
+                style={{ display: "flex", justifyContent: "flex-start", textAlign: "left" }}
               >
                 {item.label}
               </Button>
