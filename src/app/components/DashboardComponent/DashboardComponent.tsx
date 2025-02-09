@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react"; 
+import { useState } from "react";
 import ProtectedRoute from "@/app/components/ProtectedRoute"; // Import the HOC
 
 import {
@@ -10,6 +10,7 @@ import {
   IconSoup,
   IconUserCircle,
   IconBrandGoogleAnalytics,
+  IconInbox
 } from "@tabler/icons-react";
 import { AppShell, Group, Button, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -34,7 +35,7 @@ const navItems = [
     icon: IconShoppingCart,
   },
   { key: "recipe", label: "Recipe", icon: IconSoup },
-  { key: "showPost", label: "Show Post", icon: IconSoup },
+  { key: "showPost", label: "Show Post", icon: IconInbox },
   { key: "profile", label: "My Profile", icon: IconUserCircle },
   { key: "leaderBoard", label: "Leaderboard", icon: IconBrandGoogleAnalytics },
 ];
@@ -68,7 +69,7 @@ export function DashboardComponent() {
       case "profile":
         return <Profile />;
       case "leaderBoard":
-        return <Leaderboard />
+        return <Leaderboard />;
       default:
         return <UploadBill />;
     }
@@ -95,7 +96,12 @@ export function DashboardComponent() {
                 hiddenFrom="sm"
                 size="sm"
               />
-              {/* <MantineLogo size={28} /> */}
+              <img
+                className="ml-10 w-auto h-auto max-w-full sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg"
+                src="/logo.png"
+                alt="Logo"
+                style={{ maxHeight: "50px" }}
+              />
             </Group>
           </Group>
         </AppShell.Header>
@@ -111,7 +117,11 @@ export function DashboardComponent() {
                 fullWidth
                 onClick={() => setActive(item.key)}
                 mb="sm"
-                style={{ display: "flex", justifyContent: "flex-start", textAlign: "left" }}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  textAlign: "left",
+                }}
               >
                 {item.label}
               </Button>
@@ -133,6 +143,6 @@ export function DashboardComponent() {
         {/* MAIN CONTENT - Dynamically Loaded Component */}
         <AppShell.Main>{renderContent()}</AppShell.Main>
       </AppShell>
-      </ProtectedRoute>
+    </ProtectedRoute>
   );
 }

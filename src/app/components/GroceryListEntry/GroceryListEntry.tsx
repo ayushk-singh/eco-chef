@@ -130,7 +130,7 @@ export function GroceryListEntry() {
 
       <button
         onClick={addItem}
-        className="w-full px-4 py-2 bg-blue-600 text-white rounded-md"
+        className="w-full px-4 py-2 bg-green-600 text-white rounded-md"
         disabled={loading}
       >
         {loading ? "Adding..." : "Add Item"}

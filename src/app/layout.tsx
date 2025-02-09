@@ -3,7 +3,12 @@
 import '@mantine/core/styles.css';
 import '@/app/styles/globals.css'
 
-import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
+import {createTheme, ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: 'Open Sans, sans-serif',
+  primaryColor: 'green',
+});
 
 
 export const metadata = {
@@ -22,7 +27,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-      <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
+      <MantineProvider theme={theme} defaultColorScheme="dark">{children}</MantineProvider>
       </body>
     </html>
   );
