@@ -13,7 +13,7 @@ import {
   Notification,
 } from "@mantine/core";
 import classes from "./AuthComponentSignup.module.css";
-import { account, ID } from "@/lib/appwrite";
+import { account, databases, ID } from "@/lib/appwrite"; // Ensure databases is imported
 
 export function AuthComponentSignup() {
   const router = useRouter();
@@ -24,11 +24,25 @@ export function AuthComponentSignup() {
 
   const handleSignup = async () => {
     try {
-      await account.create(ID.unique(), email, password, name);
-      alert('Account Created Successfully')
-      router.push("/auth?mode=login"); 
+      // Step 1: Create the user in Appwrite
+      const user = await account.create(ID.unique(), email, password, name);
+      
+      // Step 2: Create the user document in the 'users' collection with default points = 0
+      const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string;
+      const collectionId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USERS as string;
+
+      const userDocument = {
+        name: name, // Store only the name
+        email: email,
+        points: 0, // Default points
+      };
+
+      await databases.createDocument(databaseId, collectionId, ID.unique(), userDocument);
+      
+      alert('Account Created Successfully');
+      router.push("/auth?mode=login"); // Redirect to login page
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message); // Display error message if there's an issue
     }
   };
 

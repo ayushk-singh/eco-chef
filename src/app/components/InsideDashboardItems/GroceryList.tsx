@@ -4,11 +4,11 @@ import { Query } from "appwrite";
 
 interface Item {
   id: string;
-  name: string;
-  quantity: number;
-  isRefrigerated: boolean;
+  name: any;  // You may want to refine this type
+  quantity: any;  // You may want to refine this type
+  isRefrigerated: any;  // You may want to refine this type
   expiry: string | null;
-  purchase: string;
+  purchase: string | null;  // Update to allow null
 }
 
 export default function GroceryList() {

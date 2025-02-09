@@ -9,6 +9,7 @@ import {
   IconShoppingCart,
   IconSoup,
   IconUserCircle,
+  IconBrandGoogleAnalytics,
 } from "@tabler/icons-react";
 import { AppShell, Group, Button, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -22,7 +23,8 @@ import UploadBill from "@/app/components/InsideDashboardItems/UploadBill";
 import GroceryList from "@/app/components/InsideDashboardItems/GroceryList";
 import Recipe from "@/app/components/InsideDashboardItems/Receipe";
 import Profile from "@/app/components/InsideDashboardItems/Profile";
-import VerifyRecipe from "../InsideDashboardItems/VerifyRecipe";
+import ShowPost from "@/app/components/InsideDashboardItems/ShowPost";
+import Leaderboard from "../InsideDashboardItems/Leaderboard";
 
 const navItems = [
   { key: "UploadBill", label: "Add Items", icon: IconReceipt2 },
@@ -32,8 +34,9 @@ const navItems = [
     icon: IconShoppingCart,
   },
   { key: "recipe", label: "Recipe", icon: IconSoup },
-  { key: "verifyRecipe", label: "Verify Recipe", icon: IconSoup },
+  { key: "showPost", label: "Show Post", icon: IconSoup },
   { key: "profile", label: "My Profile", icon: IconUserCircle },
+  { key: "leaderBoard", label: "Leaderboard", icon: IconBrandGoogleAnalytics },
 ];
 
 export function DashboardComponent() {
@@ -60,10 +63,12 @@ export function DashboardComponent() {
         return <GroceryList />;
       case "recipe":
         return <Recipe />;
-      case "verifyRecipe":
-        return <VerifyRecipe />;
+      case "showPost":
+        return <ShowPost />;
       case "profile":
         return <Profile />;
+      case "leaderBoard":
+        return <Leaderboard />
       default:
         return <UploadBill />;
     }
@@ -90,7 +95,7 @@ export function DashboardComponent() {
                 hiddenFrom="sm"
                 size="sm"
               />
-              <MantineLogo size={28} />
+              {/* <MantineLogo size={28} /> */}
             </Group>
           </Group>
         </AppShell.Header>
