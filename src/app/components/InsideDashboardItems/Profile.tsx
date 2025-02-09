@@ -59,15 +59,34 @@ const Profile = () => {
   }, []); // Only run once when the component mounts
 
   return (
-    <div className="p-4">
-      {loading && <p className="text-center text-gray-500">Loading profile...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
-      {user && !loading && !error && (
-        <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4">{user.name}'s Profile</h2>
-          <p className="text-lg">Points: {user.points}</p>
-        </div>
-      )}
+    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+      <div className="w-full max-w-2xl p-8 bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-700">
+        {loading && <p className="text-center text-gray-500">Loading profile...</p>}
+        {error && <p className="text-center text-red-500">{error}</p>}
+        {user && !loading && !error && (
+          <div className="space-y-8">
+            <div className="flex items-center space-x-6">
+              <div className="w-20 h-20 rounded-full bg-gray-600 flex items-center justify-center text-3xl font-bold text-indigo-600">
+                {user.name.charAt(0)}
+              </div>
+              <h2 className="text-4xl font-semibold text-gray-100">{user.name}'s Profile</h2>
+            </div>
+            <div className="bg-gray-700 p-6 rounded-2xl shadow-lg space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-lg font-medium text-gray-300">Email:</p>
+                <p className="text-lg text-gray-200">{user.email}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="text-lg font-medium text-gray-300">Points:</p>
+                <p className="text-lg text-gray-200">{user.points}</p>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            
+          </div>
+        )}
+      </div>
     </div>
   );
 };

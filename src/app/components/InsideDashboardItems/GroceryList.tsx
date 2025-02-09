@@ -99,7 +99,7 @@ export default function GroceryList() {
 
       <table className="min-w-full table-auto">
         <thead>
-          <tr className="bg-gray-100 dark:bg-gray-800">
+          <tr className="bg-gray-100 dark:bg-green-600">
             <th className="p-2 border-b">Name</th>
             <th className="p-2 border-b">Quantity</th>
             <th className="p-2 border-b">Refrigerated</th>

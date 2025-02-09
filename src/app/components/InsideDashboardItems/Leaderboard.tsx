@@ -50,31 +50,38 @@ export default function Leaderboard() {
   }, []);
 
   return (
-    <div className="mt-10 w-full max-w-2xl mx-auto border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-6">Leaderboard</h2>
+    <div className="min-h-screen w-full bg-black text-white flex justify-center items-center p-4">
+      <div className="w-full h-full max-w-4xl bg-gray-900 rounded-lg shadow-xl p-6 flex flex-col">
+        <h2 className="text-3xl font-semibold text-center mb-6">Leaderboard</h2>
 
-      {loading && <p className="text-center text-gray-500">Loading...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
+        {loading && <p className="text-center text-gray-500">Loading...</p>}
+        {error && <p className="text-center text-red-500">{error}</p>}
 
-      <div className="overflow-x-auto">
-        <table className="w-full table-auto border-collapse">
-          <thead>
-            <tr className="bg-gray-100 dark:bg-gray-700">
-              <th className="px-4 py-2 text-left">Rank</th>
-              <th className="px-4 py-2 text-left">User</th>
-              <th className="px-4 py-2 text-left">Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user.id} className="border-b border-gray-200 dark:border-gray-600">
-                <td className="px-4 py-2">{index + 1}</td>
-                <td className="px-4 py-2">{user.email}</td>
-                <td className="px-4 py-2">{user.points}</td>
+        <div className="overflow-auto shadow-md rounded-lg">
+          <table className="w-full table-auto border-collapse bg-gray-800 rounded-lg">
+            <thead>
+              <tr className="bg-gradient-to-r from-green-700 to-green-800 text-white">
+                <th className="px-6 py-3 text-left text-sm font-medium">Rank</th>
+                <th className="px-6 py-3 text-left text-sm font-medium">User</th>
+                <th className="px-6 py-3 text-left text-sm font-medium">Points</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr
+                  key={user.id}
+                  className={`${
+                    index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
+                  } hover:bg-gray-600 transition-all border-b border-gray-600`}
+                >
+                  <td className="px-6 py-4 text-sm">{index + 1}</td>
+                  <td className="px-6 py-4 text-sm">{user.email}</td>
+                  <td className="px-6 py-4 text-sm">{user.points}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

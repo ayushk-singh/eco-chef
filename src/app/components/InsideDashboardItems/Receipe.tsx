@@ -249,14 +249,14 @@ export default function RecipeGenerator() {
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={generateRecipe}
-          className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
+          className="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors"
         >
           Suggest Recipe
         </button>
 
         <button
           onClick={generateRecipe}
-          className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
+          className="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition-colors"
         >
           Another Recipe
         </button>
